@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "display";
+}
+
+<head>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+</head>
+<img src="~/Content/Images/export-map-share.png"
+     style="
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    
+    "/>
+<p id="Latitude" style="
+    position: absolute;"></p>
+<p id="Longitude" style="
+    position: absolute;"></p>
+
+    
+@if (@ViewBag.time == null) {
+
+    <script>
+        addPlaneData = (function () {
+        $.post("@Url.Action("GetPlaneData")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+            $xml = $(xmlDoc),
+            Latitude = $xml.find("Latitude").text();
+            Longitude = $xml.find("Longitude").text();
+
+            $("#Latitude").text(Latitude);
+            $("#Longitude").text(Longitude);
+            })
+        })
+        addPlaneData();
+    </script>
+
+} else {
+    <script>
+        addPlaneData = (function () {
+        $.post("@Url.Action("GetPlaneData")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+            $xml = $(xmlDoc),
+            Latitude = $xml.find("Latitude").text();
+            Longitude = $xml.find("Longitude").text();
+
+            $("#Latitude").text(Latitude);
+            $("#Longitude").text(Longitude);
+            })
+        })
+        var intervalTime = @ViewBag.time * 1000;
+
+        setInterval(addPlaneData, intervalTime);
+        addPlaneData();
+
+    </script>
+
+}
+
+
