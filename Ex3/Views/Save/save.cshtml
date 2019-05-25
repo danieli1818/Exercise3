@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "save";
+}
+
+<img src="~/Content/Images/export-map-share.png" style="
+    width: 100%;
+    height: 100%;
+
+    position: absolute;"
+     id="mapImage"/>
+
+<head>
+    <style>
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            position: absolute;
+        }
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script>
+        function normalize(value, min, max, newMin, newMax) {
+            return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
+        }
+        function main() {
+            var dataList = [1, 2, 3, 4];
+            dataList.length = 0;
+            function addPlaneData() {
+            $.post("@Url.Action("GetPlaneData")").done(function (xml) {
+                var xmlDoc = $.parseXML(xml),
+                $xml = $(xmlDoc)
+                var Latitude = $xml.find("Latitude").text();
+                var Longitude = $xml.find("Longitude").text();
+
+                var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
+                dataList.push(data);
+
+                Latitude *= 10;
+                LatitudeDiff = Latitude - parseInt(Latitude);
+                LatitudeDiff *= 1000;
+
+                LatitudeDiff /= 10;
+
+                Longitude *= 10;
+                LongitudeDiff = Longitude - parseInt(Longitude);
+                LongitudeDiff *= 1000;
+
+                LatitudeValue = normalize(LatitudeDiff, -100, 100, 0, 100);
+                // alert(LongitudeDiff);
+                LongitudeValue = normalize(LongitudeDiff, -1000, 1000, 0, 100);
+
+                var dot = document.createElement("SPAN");
+                dot.className = "dot";
+                var img = document.getElementById("mapImage");
+                //var offset = img.offset;
+                var width = img.width;
+                var height = img.height;
+
+                var centerX = width / 2;
+                var centerY = height / 2;
+                var left = String(parseFloat(LatitudeValue)).concat("%");
+                var top = String(parseFloat(LongitudeValue)).concat("%");
+                // alert(LatitudeDiff);
+                // alert(LongitudeDiff);
+                dot.style.left = left;
+                dot.style.top = top;
+                document.body.appendChild(dot);
+                // $("#Latitude").text(Latitude);
+                // $("#Longitude").text(Longitude);
+                })
+            }
+            var intervalTime = (1.0 / @ViewBag.time) * 1000;
+
+            var id = setInterval(addPlaneData, intervalTime);
+            addPlaneData(dataList);
+            setTimeout(function() {
+                clearInterval(id);
+                $.post("@Url.Action("SaveInFile")");
+            }, @ViewBag.timer * 1000);
+
+        }
+
+        main();
+
+
+    </script>
+</head>
+
+
+
