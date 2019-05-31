@@ -101,6 +101,11 @@ namespace Ex3.Controllers
             }
         }
 
+        /*public ActionResult display(string content, string port, string time)
+        {
+            return 
+        }*/
+
         public string ToXML(PlaneDataModel pdm)
         {
             StringBuilder sb = new StringBuilder();

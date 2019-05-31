@@ -26,9 +26,9 @@ namespace Ex3.Controllers
         {
             ViewBag.time = time;
             ViewBag.timer = timer;
-            Session["filename"] = filename;
+            ViewBag.filename = filename;
             string filepath = System.Web.HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, filename));
-            System.IO.File.WriteAllText(filepath, "");
+            // System.IO.File.WriteAllText(filepath, "");
             if (Session["sc"] != null)
             {
                 SimulatorCommunicator scs = Session["sc"] as SimulatorCommunicator;
@@ -80,38 +80,23 @@ namespace Ex3.Controllers
                 }
                 else
                 {
-                    PlaneDataModel pdm = new PlaneDataModel(sc.GetLatitude(), sc.GetLongitude());
+                    PlaneDataModel pdm = new PlaneDataModel(sc.GetLatitude(), sc.GetLongitude(), sc.GetThrottle(), sc.GetRudder());
                     string xml = ToXML(pdm);
-                    if (Session["data"] != null)
-                    {
-                        Session["data"] += "\r\n";
-                    } else
-                    {
-                        Session["data"] = "";
-                    }
-                    Session["data"] += xml;
                     return xml;
                 }
             }
         }
 
         [HttpPost]
-        public void SaveInFile()
+        public void SaveInFile(string filename, string data)
         {
-            string filename = Session["filename"] as string;
             if (filename == null)
             {
-                throw new Exception("File Name Session Is Missing");
+                throw new Exception("File Name Is Missing");
             } else
             {
-                string data = Session["data"] as string;
-                if (data != null)
-                {
-                    string filepath = System.Web.HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, filename));
-                    System.IO.File.AppendAllText(@filepath, data);
-                    // System.IO.File.WriteAllText(@filename, data);
-                    Session["data"] = "";
-                }
+                DataSaver ds = new DataSaver();
+                ds.saveData(filename, data);
             }
         }
     }

@@ -28,44 +28,66 @@ namespace Ex3.Models
             IP = ip;
             Port = port;
             tcpClient = new TcpClient();
-            tcpClient.Connect(ip, port);
+            while (true)
+            {
+                try
+                {
+                    tcpClient.Connect(ip, port);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    if (e.GetType().Equals(SocketError.ConnectionRefused))
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
+            
+            
         }
 
         public double GetLatitude()
         {
-            NetworkStream ns = tcpClient.GetStream();
-            StreamWriter sw = new StreamWriter(ns);
-            sw.WriteLine("get /position/latitude-deg");
-            sw.Flush();
-            StreamReader sr = new StreamReader(ns);
-            string latitudeStr = sr.ReadLine();
-            while (latitudeStr == null || !latitudeStr.StartsWith("/position/latitude-deg = '"))
-            {
-                latitudeStr = sr.ReadLine();
-            }
-            latitudeStr = latitudeStr.Substring("/position/latitude-deg = '".Length);
-            latitudeStr = latitudeStr.Substring(0, latitudeStr.IndexOf("'"));
-            double latitude = double.Parse(latitudeStr);
-            return latitude;
+            string latitudePath = "/position/latitude-deg";
+            return GetValue(latitudePath, double.Parse);
 
         }
 
         public double GetLongitude()
         {
+            string longitudePath = "/position/longitude-deg";
+            return GetValue(longitudePath, double.Parse);
+        }
+
+        public double GetThrottle()
+        {
+            string throttlePath = "/controls/engines/current-engine/throttle";
+            return GetValue(throttlePath, double.Parse);
+        }
+
+        public double GetRudder()
+        {
+            string rudderPath = "/controls/flight/rudder";
+            return GetValue(rudderPath, double.Parse);
+        }
+
+        public T GetValue<T>(string path, Func<string, T> castingFunction)
+        {
             NetworkStream ns = tcpClient.GetStream();
             StreamWriter sw = new StreamWriter(ns);
-            sw.WriteLine("get /position/longitude-deg");
+            sw.WriteLine("get " + path);
             sw.Flush();
             StreamReader sr = new StreamReader(ns);
-            string longitudeStr = sr.ReadLine();
-            while (longitudeStr == null || !longitudeStr.StartsWith("/position/longitude-deg = '"))
+            string valueStr = sr.ReadLine();
+            while (valueStr == null || !valueStr.StartsWith(path + " = '"))
             {
-                longitudeStr = sr.ReadLine();
+                valueStr = sr.ReadLine();
             }
-            longitudeStr = longitudeStr.Substring("/position/longitude-deg = '".Length);
-            longitudeStr = longitudeStr.Substring(0, longitudeStr.IndexOf("'"));
-            double longitude = double.Parse(longitudeStr);
-            return longitude;
+            valueStr = valueStr.Substring((path + " = '").Length);
+            valueStr = valueStr.Substring(0, valueStr.IndexOf("'"));
+            T value = castingFunction(valueStr);
+            return value;
         }
 
         public void close()

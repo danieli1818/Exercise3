@@ -112,6 +112,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataSaver.cs" />
     <Compile Include="Models\PlaneDataModel.cs" />
     <Compile Include="Models\SimulatorCommunicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

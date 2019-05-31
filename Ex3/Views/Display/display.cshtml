@@ -3,6 +3,7 @@
     ViewBag.Title = "display";
 }
 
+<html>
 <head>
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <style>
@@ -14,23 +15,41 @@
             display: inline-block;
             position: absolute;
         }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #myCanvas {
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
     </style>
 </head>
-<div id="div">
-    <img src="~/Content/Images/export-map-share.png"
-         style="
+
+<body id="body">
+
+    <img src="~/Content/Images/export-map-share.png" style="
     width: 100%;
     height: 100%;
 
-    position: absolute;
+    position: absolute;"
+         id="mapImage" />
 
-    " id="mapImage" />
-</div>
+    <canvas id="myCanvas"></canvas>
 
-<p id="Latitude" style="
-    position: absolute;"></p>
-<p id="Longitude" style="
-    position: absolute;"></p>
+
+
+</body>
+</html>
+
 
 @if (ViewBag.isSavedSimulation == null)
 {
@@ -38,88 +57,172 @@
     {
 
         <script>
-        addPlaneData = (function () {
-        $.post("@Url.Action("GetPlaneData")").done(function (xml) {
-            var xmlDoc = $.parseXML(xml),
-            $xml = $(xmlDoc),
-            Latitude = $xml.find("Latitude").text();
-            Longitude = $xml.find("Longitude").text();
+            function normalize(value, min, max, newMin, newMax) {
+                return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
+            }
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.canvas.width = $(body).width();
+            ctx.canvas.height = $(body).height();
+            function addPlaneData() {
+                $.post("@Url.Action("GetPlaneData")").done(function (xml) {
+                    var xmlDoc = $.parseXML(xml),
+                        $xml = $(xmlDoc);
+                    var Latitude = $xml.find("Latitude").text();
+                    var Longitude = $xml.find("Longitude").text();
+                    //var Latitude = 90;
+                    //var Longitude = 180;
 
-            Latitude *= 10;
-            LatitudeDiff = Latitude - parseInt(Latitude);
-            LatitudeDiff *= 1000;
+                    //var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
+                    // dataList.push(data);
 
-            Longitude *= 10;
-            LongitudeDiff = Longitude - parseInt(Longitude);
-            LongitudeDiff *= 100;
+                    /*Latitude *= 10;
+                    LatitudeDiff = Latitude - parseInt(Latitude);
+                    LatitudeDiff *= 1000;
 
-            var dot = document.createElement("SPAN");
-            dot.className = "dot";
-            var img = document.getElementById("mapImage");
-            //var offset = img.offset;
-            var width = img.width;
-            var height = img.height;
+                    LatitudeDiff /= 10;
 
-            var centerX = width / 2;
-            var centerY = height / 2;
-            var left = String(parseInt(centerX + LatitudeDiff)).concat("px");
-            var top = String(parseInt(centerY + LongitudeDiff)).concat("px");
-            alert(LatitudeDiff);
-            alert(LongitudeDiff);
-            dot.style.left = left;
-            dot.style.top = top;
-            dot.parentElement = document.getElementById("div");
-            document.body.appendChild(dot);
-            // $("#Latitude").text(Latitude);
-            // $("#Longitude").text(Longitude);
-            })
-        })
-        addPlaneData();
+                    Longitude *= 10;
+                    LongitudeDiff = Longitude - parseInt(Longitude);
+                    LongitudeDiff *= 1000;*/
+
+                    LatitudeValue = normalize(Latitude, -90, 90, 0, $(body).height());
+                    // alert(LongitudeDiff);
+                    LongitudeValue = normalize(Longitude, -180, 180, 0, $(body).width());
+
+                    //var dot = document.createElement("SPAN");
+                    //dot.className = "dot";
+                    // var img = document.getElementById("mapImage");
+                    //var offset = img.offset;
+                    //var width = ctx.canvas.width;
+                    //var height = ctx.canvas.height;
+
+                    // var centerX = width / 2;
+                    // var centerY = height / 2;
+                    //var left = String(parseFloat(LatitudeValue) * 100 / width);
+                    //var top = String(parseFloat(LongitudeValue) * 100 / height);
+
+                    var left = LongitudeValue;
+                    var top = LatitudeValue;
+
+                
+                    // var img = document.getElementById("mapImage");
+
+                    ctx.beginPath();
+                    ctx.arc(left, top, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = "red";
+                    ctx.fill();
+                    // alert(LatitudeDiff);
+                    // alert(LongitudeDiff);
+                    // dot.style.left = left;
+                    // dot.style.top = top;
+                    // document.body.appendChild(dot);
+                    // $("#Latitude").text(Latitude);
+                    // $("#Longitude").text(Longitude);
+                    })
+            }
+            window.onload = addPlaneData();
         </script>
 
     }
     else
     {
         <script>
-        addPlaneData = (function () {
-        $.post("@Url.Action("GetPlaneData")").done(function (xml) {
-            var xmlDoc = $.parseXML(xml),
-            $xml = $(xmlDoc),
-            Latitude = $xml.find("Latitude").text();
-            Longitude = $xml.find("Longitude").text();
+            function normalize(value, min, max, newMin, newMax) {
+                return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
+            }
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.canvas.width = $(body).width();
+            ctx.canvas.height = $(body).height();
+            var points = [1, 2, 3, 4];
+            points.length = 0;
+            function addPlaneData() {
+                $.post("@Url.Action("GetPlaneData")").done(function (xml) {
+                    var xmlDoc = $.parseXML(xml),
+                        $xml = $(xmlDoc);
+                    var Latitude = $xml.find("Latitude").text();
+                    var Longitude = $xml.find("Longitude").text();
 
-            Latitude *= 10;
-            LatitudeDiff = Latitude - parseInt(Latitude);
-            LatitudeDiff *= 1000;
+                    Latitude = Math.floor(Math.random() * 180) - 90;
+                    Longitude = Math.floor(Math.random() * 361) - 180;
 
-            Longitude *= 10;
-            LongitudeDiff = Longitude - parseInt(Longitude);
-            LongitudeDiff *= 100;
+                    var ctx = c.getContext("2d");
+                    ctx.clearRect(0, 0, c.width, c.height);
+                    //var Latitude = 90;
+                    //var Longitude = 180;
 
-            var dot = document.createElement("SPAN");
-            dot.className = "dot";
-            var img = document.getElementById("mapImage");
-            //var offset = img.offset;
-            var width = img.width;
-            var height = img.height;
+                    //var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
+                    // dataList.push(data);
 
-            var centerX = width / 2;
-            var centerY = height / 2;
-            var left = String(parseInt(centerX + LatitudeDiff)).concat("px");
-            var top = String(parseInt(centerY + LongitudeDiff)).concat("px");
-            alert(LatitudeDiff);
-            alert(LongitudeDiff);
-            dot.style.left = left;
-            dot.style.top = top;
-            document.body.appendChild(dot);
-            // $("#Latitude").text(Latitude);
-            // $("#Longitude").text(Longitude);
-            })
-        })
-        var intervalTime = @ViewBag.time * 1000;
+                    /*Latitude *= 10;
+                    LatitudeDiff = Latitude - parseInt(Latitude);
+                    LatitudeDiff *= 1000;
 
-        setInterval(addPlaneData, intervalTime);
-        addPlaneData();
+                    LatitudeDiff /= 10;
+
+                    Longitude *= 10;
+                    LongitudeDiff = Longitude - parseInt(Longitude);
+                    LongitudeDiff *= 1000;*/
+
+                    LatitudeValue = normalize(Latitude, -90, 90, 0, $(body).height());
+                    // alert(LongitudeDiff);
+                    LongitudeValue = normalize(Longitude, -180, 180, 0, $(body).width());
+
+                    //var dot = document.createElement("SPAN");
+                    //dot.className = "dot";
+                    // var img = document.getElementById("mapImage");
+                    //var offset = img.offset;
+                    //var width = ctx.canvas.width;
+                    //var height = ctx.canvas.height;
+
+                    // var centerX = width / 2;
+                    // var centerY = height / 2;
+                    //var left = String(parseFloat(LatitudeValue) * 100 / width);
+                    //var top = String(parseFloat(LongitudeValue) * 100 / height);
+
+                    var left = LongitudeValue;
+                    var top = LatitudeValue;
+
+                    points.push({ x: left, y: top });
+
+                    for (var i = 0; i < points.length - 1; i++) {
+                        var firstPoint = points[i];
+                        var nextPoint = points[i + 1];
+                        ctx.beginPath();
+                        ctx.moveTo(firstPoint.x, firstPoint.y);
+                        ctx.lineTo(nextPoint.x, nextPoint.y);
+                        ctx.fillStyle = "red";
+                        ctx.stroke();
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(points[points.length - 1].x, points[points.length - 1].y);
+                    ctx.lineTo(left, top);
+                    ctx.fillStyle = "red";
+                    ctx.stroke();
+
+                
+                    // var img = document.getElementById("mapImage");
+
+                    ctx.beginPath();
+                    ctx.arc(left, top, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = "red";
+                    ctx.fill();
+                    // alert(LatitudeDiff);
+                    // alert(LongitudeDiff);
+                    // dot.style.left = left;
+                    // dot.style.top = top;
+                    // document.body.appendChild(dot);
+                    // $("#Latitude").text(Latitude);
+                    // $("#Longitude").text(Longitude);
+                    })
+            }
+            //window.onload = addPlaneData();
+            var intervalTime = (1 / @ViewBag.time) * 1000;
+
+            setInterval(addPlaneData, intervalTime);
+            window.onload = addPlaneData();
 
         </script>
 
@@ -130,6 +233,12 @@
         function normalize(value, min, max, newMin, newMax) {
             return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
         }
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.canvas.width = $(body).width();
+        ctx.canvas.height = $(body).height();
+        var points = [1, 2, 3, 4];
+        points.length = 0;
         function getPlaneData() {
             var filename = {
                 filename: "@ViewBag.filename"
@@ -151,9 +260,9 @@
                     var Latitude = $xml.find("Latitude").text();
                     var Longitude = $xml.find("Longitude").text();
 
-                    var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
+                    //var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
 
-                    Latitude *= 10;
+                    /*Latitude *= 10;
                     LatitudeDiff = Latitude - parseInt(Latitude);
                     LatitudeDiff *= 1000;
 
@@ -161,33 +270,68 @@
 
                     Longitude *= 10;
                     LongitudeDiff = Longitude - parseInt(Longitude);
-                    LongitudeDiff *= 1000;
+                    LongitudeDiff *= 1000;*/
 
-                    LatitudeValue = normalize(LatitudeDiff, -100, 100, 0, 100);
+                    var ctx = c.getContext("2d");
+                    ctx.clearRect(0, 0, c.width, c.height);
+                    //var Latitude = 90;
+                    //var Longitude = 180;
+
+                    //var data = "Latitude: " + String(Latitude) + " Longitude: " + String(Longitude);
+                    // dataList.push(data);
+
+                    /*Latitude *= 10;
+                    LatitudeDiff = Latitude - parseInt(Latitude);
+                    LatitudeDiff *= 1000;
+
+                    LatitudeDiff /= 10;
+
+                    Longitude *= 10;
+                    LongitudeDiff = Longitude - parseInt(Longitude);
+                    LongitudeDiff *= 1000;*/
+
+                    LatitudeValue = normalize(Latitude, -90, 90, 0, ctx.canvas.height);
                     // alert(LongitudeDiff);
-                    LongitudeValue = normalize(LongitudeDiff, -1000, 1000, 0, 100);
+                    LongitudeValue = normalize(Longitude, -180, 180, 0, ctx.canvas.width);
 
-                    var dot = document.createElement("SPAN");
-                    dot.className = "dot";
-                    var img = document.getElementById("mapImage");
-                    //var offset = img.offset;
-                    var width = img.width;
-                    var height = img.height;
+                    var left = LongitudeValue;
+                    var top = LatitudeValue;
 
-                    var centerX = width / 2;
-                    var centerY = height / 2;
-                    var left = String(parseFloat(LatitudeValue)).concat("%");
-                    var top = String(parseFloat(LongitudeValue)).concat("%");
-                    // alert(LatitudeDiff);
-                    // alert(LongitudeDiff);
-                    dot.style.left = left;
-                    dot.style.top = top;
-                    document.body.appendChild(dot);
+                    points.push({ x: left, y: top });
+
+                    for (var j = 0; j < points.length - 1; j++) {
+                        var firstPoint = points[j];
+                        var nextPoint = points[j + 1];
+                        ctx.beginPath();
+                        ctx.moveTo(firstPoint.x, firstPoint.y);
+                        ctx.lineTo(nextPoint.x, nextPoint.y);
+                        ctx.fillStyle = "red";
+                        ctx.stroke();
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(points[points.length - 1].x, points[points.length - 1].y);
+                    ctx.lineTo(left, top);
+                    ctx.fillStyle = "red";
+                    ctx.stroke();
+
+
+                    // var img = document.getElementById("mapImage");
+
+                    ctx.beginPath();
+                    ctx.arc(left, top, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = "red";
+                    ctx.fill();
                     // $("#Latitude").text(Latitude);
                     // $("#Longitude").text(Longitude);
                 }
             })
         }
+
+        /*$(window).resize = function () {
+            ctx.canvas.width = $(body).width;
+            ctx.canvas.height = $(body).height;
+        }*/
         
         
         getPlaneData();
