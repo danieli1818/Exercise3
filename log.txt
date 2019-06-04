@@ -1,0 +1,41 @@
+commit d8a418226a6cf5b54b0605d0b7ae25a23dae0f59
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Tue Jun 4 17:50:12 2019 +0300
+
+    comments update
+
+commit edd43c11e636739635268bbe21ab8edbf04c68d9
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Fri May 31 18:17:58 2019 +0300
+
+    update canvas fix
+
+commit 988acf4af8d6eb95ff3d227847ee8dab55452b5d
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Sat May 25 14:34:41 2019 +0300
+
+    update 4
+
+commit 46b060da291fc9655e1370e03b97af95bf235039
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Sat May 25 14:34:21 2019 +0300
+
+    update 3
+
+commit 0d5f275db7b93e9a1c17e1278fb59a8bf61d8ee9
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Sat May 25 14:33:31 2019 +0300
+
+    update 2
+
+commit 6814ec871cb93867c7600ba316928474ea28b7a3
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Fri May 24 15:51:00 2019 +0300
+
+    update 1
+
+commit dbc3d62983b0b7de8616bbd0964b1ea82c510796
+Author: Daniel Rottner <danieli205025@gmail.com>
+Date:   Fri May 24 15:39:08 2019 +0300
+
+    first update

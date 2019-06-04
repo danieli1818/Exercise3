@@ -1,3 +1,2 @@
 <?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
+<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.3252467</Latitude><Longitude>-157.9431851</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>

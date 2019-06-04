@@ -149,7 +149,7 @@
             var intervalTime = (@ViewBag.time) * 1000;
 
             var id = setInterval(addPlaneData, intervalTime);
-            addPlaneData(dataList);
+            //addPlaneData(dataList);
             setTimeout(function() {
                 clearInterval(id);
                 shouldStop = true;

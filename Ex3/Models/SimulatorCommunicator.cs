@@ -139,7 +139,10 @@ namespace Ex3.Models
         /// </summary>
         public void close()
         {
-            tcpClient.Close();
+            if (tcpClient.Connected)
+            {
+                tcpClient.Close();
+            }
         }
 
     }

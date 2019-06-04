@@ -100,6 +100,14 @@ namespace Ex3.Controllers
         /// Each Step In time Intervals.</returns>
         public ActionResult displaySavedSimulation(string filename, int time)
         {
+            if (Session["sc"] != null)
+            {
+                SimulatorCommunicator scs = Session["sc"] as SimulatorCommunicator;
+                if (scs != null)
+                {
+                    scs.close();
+                }
+            }
             ViewBag.filename = filename;
             ViewBag.time = time;
             ViewBag.isSavedSimulation = true;
