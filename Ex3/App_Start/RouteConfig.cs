@@ -5,10 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
+/// <summary>
+/// The Namespace Ex3 Of The Project.
+/// </summary>
 namespace Ex3
 {
+    /// <summary>
+    /// RouteConfig class
+    /// </summary>
     public class RouteConfig
     {
+        /// <summary>
+        /// The Function RegisterRoutes Registers The Routes In The RouteCollection routes which
+        /// it gets as a parameter.
+        /// </summary>
+        /// <param name="routes">RouteCollection routes in which we register.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

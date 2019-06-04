@@ -144,9 +144,6 @@
                     var Latitude = $xml.find("Latitude").text();
                     var Longitude = $xml.find("Longitude").text();
 
-                    Latitude = Math.floor(Math.random() * 180) - 90;
-                    Longitude = Math.floor(Math.random() * 361) - 180;
-
                     var ctx = c.getContext("2d");
                     ctx.clearRect(0, 0, c.width, c.height);
                     //var Latitude = 90;
@@ -192,14 +189,14 @@
                         ctx.beginPath();
                         ctx.moveTo(firstPoint.x, firstPoint.y);
                         ctx.lineTo(nextPoint.x, nextPoint.y);
-                        ctx.fillStyle = "red";
+                        ctx.strokeStyle = "red";
                         ctx.stroke();
                     }
 
                     ctx.beginPath();
                     ctx.moveTo(points[points.length - 1].x, points[points.length - 1].y);
                     ctx.lineTo(left, top);
-                    ctx.fillStyle = "red";
+                    ctx.strokeStyle = "red";
                     ctx.stroke();
 
                 
@@ -219,7 +216,7 @@
                     })
             }
             //window.onload = addPlaneData();
-            var intervalTime = (1 / @ViewBag.time) * 1000;
+            var intervalTime = (@ViewBag.time) * 1000;
 
             setInterval(addPlaneData, intervalTime);
             window.onload = addPlaneData();
@@ -246,11 +243,11 @@
             $.post("@Url.Action("GetFileSavedData")", filename).done(function (text) {
                 var lines = text.split("\r\n");
                 var i = 0;
-                var id = setInterval(getPlaneDataLine, (1.0 / @ViewBag.time) * 1000);
+                var id = setInterval(getPlaneDataLine, (@ViewBag.time) * 1000);
                 function getPlaneDataLine() {
                     if (i >= lines.length) {
                         clearInterval(id);
-                        alert("Simulation Has Finished.");
+                        //alert("Simulation Has Finished.");
                         return;
                     }
                     xml = lines[i];
@@ -305,14 +302,14 @@
                         ctx.beginPath();
                         ctx.moveTo(firstPoint.x, firstPoint.y);
                         ctx.lineTo(nextPoint.x, nextPoint.y);
-                        ctx.fillStyle = "red";
+                        ctx.strokeStyle = "red";
                         ctx.stroke();
                     }
 
                     ctx.beginPath();
                     ctx.moveTo(points[points.length - 1].x, points[points.length - 1].y);
                     ctx.lineTo(left, top);
-                    ctx.fillStyle = "red";
+                    ctx.strokeStyle = "red";
                     ctx.stroke();
 
 
@@ -324,6 +321,13 @@
                     ctx.fill();
                     // $("#Latitude").text(Latitude);
                     // $("#Longitude").text(Longitude);
+                    if (i >= lines.length) {
+                        clearInterval(id);
+                        setTimeout(function () {
+                            alert("Simulation Has Finished.");
+                        }, 100);
+                        return;
+                    }
                 }
             })
         }

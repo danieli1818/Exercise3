@@ -5,18 +5,34 @@ using System.Text;
 using System.Web;
 using System.Xml;
 
+/// <summary>
+/// The Ex3.Models Namespace Of The Models Of The Project.
+/// </summary>
 namespace Ex3.Models
 {
+    /// <summary>
+    /// The DataSaver Class Which Is Responsible To Save Data In Files In The App_Data Relative Folder.
+    /// </summary>
     public class DataSaver
     {
-
+        /// <summary>
+        /// The SCENARIO_FILE const string of the App_Data Files Relative Path.
+        /// </summary>
         public const string SCENARIO_FILE = "~/App_Data/{0}.txt";           // The Path of the Secnario
 
+        /// <summary>
+        /// The DataSaver Constructor.
+        /// </summary>
         public DataSaver()
         {
 
         }
 
+        /// <summary>
+        /// The saveData Function gets as parameters a string filename and a string data and saves the data in the file with the filename name in the App_Data Folder.
+        /// </summary>
+        /// <param name="filename">The string filename of the file to save in.</param>
+        /// <param name="data">string data to save.</param>
         public void saveData(string filename, string data)
         {
             List<PlaneDataModel> datas = ConvertDataFromStringToListOfPlaneDataModels(data);
@@ -35,6 +51,11 @@ namespace Ex3.Models
             }
         }
 
+        /// <summary>
+        /// The ConvertDataFromStringToListOfPlaneDataModels gets as a parameter a string data and converts it to a List of PlaneDataModels.</PlaneDataModel>
+        /// </summary>
+        /// <param name="data">string data to convert to a List of PlaneDataModels</param>
+        /// <returns>returns a List of PlaneDataModels of the string data.</returns>
         private List<PlaneDataModel> ConvertDataFromStringToListOfPlaneDataModels(string data)
         {
             List<PlaneDataModel> datas = new List<PlaneDataModel>();
@@ -50,6 +71,11 @@ namespace Ex3.Models
             return datas;
         }
 
+        /// <summary>
+        /// The ConvertDataFromStringToPlaneDataModel Function gets as a parameter a string data and converts it to the PlaneDataModel.
+        /// </summary>
+        /// <param name="data">string data to convert to PlaneDataModel</param>
+        /// <returns>the PlaneDataModel of the string data.</returns>
         private PlaneDataModel ConvertDataFromStringToPlaneDataModel(string data)
         {
             string[] planeDatas = data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -72,6 +98,11 @@ namespace Ex3.Models
             return pdm;
         }
 
+        /// <summary>
+        /// The ToXML Function gets as a parameter a PlaneDataModel pdm and returns its string xml form.
+        /// </summary>
+        /// <param name="pdm">PlaneDataModel pdm.</param>
+        /// <returns>returns the string xml form of the pdm.</returns>
         private string ToXML(PlaneDataModel pdm)
         {
             StringBuilder sb = new StringBuilder();

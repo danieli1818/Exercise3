@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>76</Latitude><Longitude>179</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-39</Latitude><Longitude>-124</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>56</Latitude><Longitude>32</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-49</Latitude><Longitude>-149</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-86</Latitude><Longitude>20</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>17</Latitude><Longitude>-24</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>46</Latitude><Longitude>158</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-42</Latitude><Longitude>-39</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>36</Latitude><Longitude>-58</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-16</Latitude><Longitude>82</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>31</Latitude><Longitude>-112</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
-<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>-6</Latitude><Longitude>166</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
+<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
+<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>
+<?xml version="1.0" encoding="utf-16"?><PlaneData><Latitude>21.32524669</Latitude><Longitude>-157.9431852</Longitude><Throttle>0</Throttle><Rudder>0</Rudder></PlaneData>

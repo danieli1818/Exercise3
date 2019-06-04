@@ -74,9 +74,6 @@
                     var Throttle = $xml.find("Throttle").text();
                     var Rudder = $xml.find("Throttle").text();
 
-                    Latitude = Math.floor(Math.random() * 180) - 90;
-                    Longitude = Math.floor(Math.random() * 361) - 180;
-
                     var ctx = c.getContext("2d");
                     ctx.clearRect(0, 0, c.width, c.height);
                     //var Latitude = 90;
@@ -123,14 +120,14 @@
                         ctx.beginPath();
                         ctx.moveTo(firstPoint.x, firstPoint.y);
                         ctx.lineTo(nextPoint.x, nextPoint.y);
-                        ctx.fillStyle = "red";
+                        ctx.strokeStyle = "red";
                         ctx.stroke();
                     }
 
                     ctx.beginPath();
                     ctx.moveTo(points[points.length - 1].x, points[points.length - 1].y);
                     ctx.lineTo(left, top);
-                    ctx.fillStyle = "red";
+                    ctx.strokeStyle = "red";
                     ctx.stroke();
 
 
@@ -149,14 +146,14 @@
                     // $("#Longitude").text(Longitude);
                     })
             }
-            var intervalTime = (1.0 / @ViewBag.time) * 1000;
+            var intervalTime = (@ViewBag.time) * 1000;
 
             var id = setInterval(addPlaneData, intervalTime);
             addPlaneData(dataList);
             setTimeout(function() {
                 clearInterval(id);
                 shouldStop = true;
-                alert(dataList);
+                //alert(dataList);
                 var data = { filename: "@ViewBag.filename", data: JSON.stringify(dataList) };
                 //var input = { filename: "@ViewBag.filename", data: data };
                 $.post("@Url.Action("SaveInFile")", data);
